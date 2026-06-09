@@ -6,8 +6,14 @@
 *   **Project Setup**:
     1.  **Install SDK**: `npm install postmark` (Node.js).
     2.  **Authentication**: Obtain a **Server API Token** from the Postmark dashboard (Server > Settings > API Tokens).
-    3.  **Sender Verification**: Create and verify a **Sender Signature** (single email) or **Domain** (DKIM/Return-Path) before sending.
+    3.  **Sender Verification**: Create and verify a **Sender Signature** (single email) or **Domain** (DKIM/Return-Path) before sending, in this case, only single email used.
     4.  **Testing**: Use the specialized test token `POSTMARK_API_TEST` to validate API calls without sending actual emails.
+* Postmark offers a black hole domain  (bounce-testing.postmarkapp.com) which allows you to fully test out bounces with your integrations.
+  For example, if you’d like to create a hard bounce, you can send an email to hardbounce@bounce-testing.postmarkapp.com. It also supports camel case and is case insensitive, meaning Hard_Bounce@bounce-testing.postmarkapp.com also works. If you’re triggering a hard bounce, the fake bounce address is also added to the Stream’s Suppression list.
+  Other examples:
+    - ISP Block: blocked@bounce-testing.postmarkapp.com
+    - Spam Notification: spamnotification@bounce-testing.postmarkapp.com
+    - Soft Bounce: softbounce@bounce-testing.postmarkapp.com
 
 ## 2. Core Primitives & APIs
 *   **Message Streams**: Logical separators for email types.
@@ -31,8 +37,8 @@ const postmark = require("postmark");
 const client = new postmark.ServerClient("your-server-token");
 
 client.sendEmail({
-  "From": "sender@yourdomain.com",
-  "To": "recipient@example.com",
+  "From": "zealt-benchmark@tabbyml.com",
+  "To": "zealt-benchmark@tabbyml.com",
   "Subject": "Hello from Postmark",
   "HtmlBody": "<strong>Hello</strong> dear Postmark user.",
   "TextBody": "Hello dear Postmark user.",
@@ -46,8 +52,8 @@ client.sendEmail({
 **Sending with Templates**
 ```javascript
 client.sendEmailWithTemplate({
-  "From": "sender@yourdomain.com",
-  "To": "recipient@example.com",
+  "From": "zealt-benchmark@tabbyml.com",
+  "To": "zealt-benchmark@tabbyml.com",
   "TemplateAlias": "welcome-email",
   "TemplateModel": {
     "user_name": "John Doe",
@@ -67,7 +73,7 @@ client.sendEmailWithTemplate({
 *   **SaaS Transactional Flows**: Password resets, magic links, invitation emails, and invoice receipts.
 *   **Inbound Email Processing**: Creating a support desk or "reply-to-comment" feature by parsing inbound JSON payloads.
 *   **Official Templates**: [activecampaign/postmark-templates](https://github.com/activecampaign/postmark-templates) - Responsive, open-source templates for common SaaS events.
-*   **Tooling**: 
+*   **Tooling**:
     *   [Postmark CLI](https://github.com/wildbit/postmark-cli): For managing templates and servers from the terminal.
     *   [Postmark MCP Server](https://github.com/activecampaign/postmark-mcp): For AI-driven email management.
 
@@ -76,6 +82,7 @@ client.sendEmailWithTemplate({
 *   **Message Stream Mismatch**: Attempting to send a broadcast email through a transactional stream (or vice versa) triggers a `1221` error.
 *   **Recipient Limits**: A single API call to `/email` has a hard limit of **50 recipients** (To + CC + BCC). For more, developers must use the batch API.
 *   **Attachment Size**: Hard limit of **10MB** total message size including attachments.
+*.  **Test Email**: The account used in evaluation is limited to zealt-benchmark@tabbyml.com, you MUST use this email as both sender and recipient.
 
 ## 5. Evaluation Ideas
 *   **Simple**: Send a "Hello World" email using the `POSTMARK_API_TEST` token.
