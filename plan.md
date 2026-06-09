@@ -82,7 +82,9 @@ client.sendEmailWithTemplate({
 *   **Message Stream Mismatch**: Attempting to send a broadcast email through a transactional stream (or vice versa) triggers a `1221` error.
 *   **Recipient Limits**: A single API call to `/email` has a hard limit of **50 recipients** (To + CC + BCC). For more, developers must use the batch API.
 *   **Attachment Size**: Hard limit of **10MB** total message size including attachments.
-*.  **Test Email**: The account used in evaluation is limited to zealt-benchmark@tabbyml.com, you MUST use this email as both sender and recipient.
+*   **Test Email**: The account used in evaluation is limited to zealt-benchmark@tabbyml.com, you MUST use this email as both sender and recipient.
+*   **Email Verification**: The FROM/TO field maybe formatted, when checking the email, MUST check contains the email address instead of exact match.
+*   **Test API Token**: While a real API token is provided as `POSTMARK_SERVER_TOKEN` environment variable, there is another test token `POSTMARK_API_TEST` that can be used to test the API, but MUST distinct from the real token in different cases, if `POSTMARK_API_TEST` would be use, then should not require the `POSTMARK_SERVER_TOKEN` environment variable.
 
 ## 5. Evaluation Ideas
 *   **Simple**: Send a "Hello World" email using the `POSTMARK_API_TEST` token.
