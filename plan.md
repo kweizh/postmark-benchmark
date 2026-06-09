@@ -85,6 +85,7 @@ client.sendEmailWithTemplate({
 *   **Test Email**: The account used in evaluation is limited to zealt-benchmark@tabbyml.com, you MUST use this email as both sender and recipient.
 *   **Email Verification**: The FROM/TO field maybe formatted, when checking the email, MUST check contains the email address instead of exact match.
 *   **Test API Token**: While a real API token is provided as `POSTMARK_SERVER_TOKEN` environment variable, there is another test token `POSTMARK_API_TEST` that can be used to test the API, but MUST distinct from the real token in different cases, if `POSTMARK_API_TEST` would be use, then should not require the `POSTMARK_SERVER_TOKEN` environment variable.
+*   **URL Verification**: When validating urls in HTML, please make sure check either the origin url or the escaped url (e.g. `&amp;` instead of `&`) is used to make sure the verification is valid.
 
 ## 5. Evaluation Ideas
 *   **Simple**: Send a "Hello World" email using the `POSTMARK_API_TEST` token.
