@@ -1,5 +1,6 @@
 # Postmark Evaluation Dataset Research Report
 
+
 ## 1. Library Overview
 *   **Description**: Postmark is a premium transactional email service focused on high deliverability and developer experience. It separates transactional email (e.g., password resets) from broadcast email (e.g., newsletters) using "Message Streams" to ensure critical application emails are never delayed by bulk marketing traffic.
 *   **Ecosystem Role**: It is a core infrastructure component for SaaS applications, typically replacing generic SMTP or competing services like SendGrid/Mailgun. It provides deep integration via REST APIs, SDKs (Node.js, Ruby, Python, .NET, PHP, Go), and advanced tooling like an official MCP server and CLI.
@@ -84,7 +85,7 @@ client.sendEmailWithTemplate({
 *   **Attachment Size**: Hard limit of **10MB** total message size including attachments.
 *   **Test Email**: The account used in evaluation is limited to zealt-benchmark@tabbyml.com, you MUST use this email as both sender and recipient.
 *   **Email Verification**: The FROM/TO field maybe formatted, when checking the email, MUST check contains the email address instead of exact match.
-*   **Test API Token**: While a real API token is provided as `POSTMARK_SERVER_TOKEN` environment variable, there is another test token `POSTMARK_API_TEST` that can be used to test the API, but MUST distinct from the real token in different cases, if `POSTMARK_API_TEST` would be use, then should not require the `POSTMARK_SERVER_TOKEN` environment variable.
+*   **Test API Token**: While a real API token is provided as `POSTMARK_SERVER_TOKEN` environment variable, there is another test token `POSTMARK_API_TEST` (a specific key value) that can be used to test the API, but MUST distinct from the real token in different cases. If `POSTMARK_API_TEST` is used, the `POSTMARK_SERVER_TOKEN` environment variable should not be required.
 *   **URL Verification**: When validating urls in HTML, please make sure check either the origin url or the escaped url (e.g. `&amp;` instead of `&`) is used to make sure the verification is valid.
 
 ## 5. Evaluation Ideas
